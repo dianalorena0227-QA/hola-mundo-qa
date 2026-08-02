@@ -7,7 +7,10 @@ export class LoginPage {
     private readonly password: Locator;
     private readonly botonIngresar: Locator;
     readonly mensajeError: Locator;
-    readonly mensajeCorrecto: Locator;   // ← expuesto para que el TEST lo afirme (NO hay expect acá)
+    readonly mensajeCorrecto: Locator;
+    readonly mensaje_email_obligatorio: Locator;
+
+    // ← expuesto para que el TEST lo afirme (NO hay expect acá)
 
     constructor(private readonly page: Page) {
         // Los locators viven acá, UNA vez. Son los mismos locators semánticos de S4.
@@ -16,6 +19,7 @@ export class LoginPage {
         this.botonIngresar = page.getByRole('button', { name: 'Iniciar sesión' });
         this.mensajeError = page.getByText('Email o contraseña incorrectos');
         this.mensajeCorrecto = page.getByText('Has iniciado sesión correctamente');
+        this.mensaje_email_obligatorio = page.getByText('El email es obligatorio');
         // ⚠️ usa el texto REAL que viste en el playground (mayúsculas, tildes, puntos)
     }
 

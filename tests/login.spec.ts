@@ -30,6 +30,47 @@ test('Login fallido con credenciales incorrectas', async ({ page }) => {
 
 });
 
+//-------Test con POM --------
+
+test('Login fallido con email inexistente', async ({ page }) => {
+    const loginPage = new LoginPage(page); //Instanciar al page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('usuario.inexistente@ejemplo.com', 'Segura2026!');
+    //Verificar
+    await expect(loginPage.mensajeError).toBeVisible();
+    await expect(loginPage.mensajeCorrecto).not.toBeVisible();
+    await expect(page).toHaveURL(/.*login/);
+
+});
+
+test('Login con email de formato inválido', async ({ page }) => {
+    const loginPage = new LoginPage(page); //Instanciar al page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('ana.garcia', 'Segura2026!');
+    //Verificar
+    await expect(loginPage.mensajeError).toBeVisible();
+    await expect(loginPage.mensajeCorrecto).not.toBeVisible();
+    await expect(page).toHaveURL(/.*login/);
+
+});
+
+test('Login con email vacío', async ({ page }) => {
+    const loginPage = new LoginPage(page); //Instanciar al page Object
+    //Preparar
+    await loginPage.goto();
+    //Actuar
+    await loginPage.login('', 'Segura2026!');
+    //Verificar
+    await expect(loginPage.mensaje_email_obligatorio).toBeVisible();
+    await expect(loginPage.mensajeCorrecto).not.toBeVisible();
+    await expect(page).toHaveURL(/.*login/);
+
+});
+
 /*Test sin el POM
 
 //Preparar
